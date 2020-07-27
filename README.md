@@ -18,7 +18,5 @@ Choose the environment to run the test and replace the -Denv in maven command
 mvn clean test -DincludeTags=tmdb-list-tests,tmdb-list-items-tests -Denv=dev
 ```
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
+## TMDB Failures
+Database might throw internal errors with 500 status code
