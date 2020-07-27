@@ -18,5 +18,5 @@ Choose the environment to run the test and replace the -Denv in maven command
 mvn clean test -DincludeTags=tmdb-list-tests,tmdb-list-items-tests -Denv=dev
 ```
 
-## TMDB Failures
+## TMDB Warning
 Database might throw internal errors with 500 status code
