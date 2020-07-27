@@ -4,9 +4,9 @@ package io.tmdb.rest.test;
 import io.restassured.response.Response;
 import io.tmdb.rest.model.list.ListResponse;
 import io.tmdb.rest.request.ListController;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import static io.tmdb.rest.common.CommonAssertions.assertStatusCode;
 import static io.tmdb.rest.common.CommonAssertions.assertStatusMessage;
@@ -14,8 +14,8 @@ import static io.tmdb.rest.model.items.TMDBListItemsFixture.getTestDataForNewTMD
 import static io.tmdb.rest.model.list.TMDBListFixture.geTestDataFortNewTMDBList;
 import static io.tmdb.rest.model.list.TMDBListFixture.getTestDataForUpdateTMDBList;
 
-
-@TestMethodOrder(OrderAnnotation.class)
+@DisplayName("API Tests for TMDB List Items")
+@Tag("tmdb-list-tests")
 public class TestTMDBList
 {
 	ListController listController = new ListController();
