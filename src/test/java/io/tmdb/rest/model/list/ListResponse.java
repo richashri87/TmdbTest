@@ -1,4 +1,4 @@
-package io.tmdb.rest.model.movielist;
+package io.tmdb.rest.model.list;
 
 import io.tmdb.rest.model.BaseModel;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieListResponse extends BaseModel {
+public class ListResponse extends BaseModel {
   private int status_code;
   private String status_message;
   private boolean success;

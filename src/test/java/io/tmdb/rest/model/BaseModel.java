@@ -2,7 +2,6 @@ package io.tmdb.rest.model;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 abstract public class BaseModel {
 
@@ -10,11 +9,11 @@ abstract public class BaseModel {
   public String toString() {
     String str = "";
     try {
-      ObjectMapper objectMapper = new ObjectMapper();
-      str = objectMapper.writeValueAsString(this);
+      str = ObjectMapperHolder.INSTANCE.get().writeValueAsString(this);
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     }
+    System.out.println(str);
     return str;
   }
 }
