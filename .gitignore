@@ -15,7 +15,7 @@
 
 # directories
 /target
-target/test-classes
+/target/test-classes
 
 # Package Files #
 *.jar
