@@ -59,7 +59,6 @@ public class BaseRequest {
                 .put("/{id}");
     }
 
-
     public Response clearById(int id, String endpoint) {
         return spec
                 .basePath(endpoint)
