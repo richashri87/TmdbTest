@@ -11,7 +11,7 @@ public class BaseRequest {
     private String baseURI;
     private String apiKey;
     private String authorization;
-    private RequestSpecification httpRequest;
+    private RequestSpecification spec;
 
     BaseRequest() {
         init();
@@ -22,7 +22,7 @@ public class BaseRequest {
         baseURI = propertiesHelper.readEnvironmentPropertyFile().getProperty("baseURI");
         apiKey = propertiesHelper.readEnvironmentPropertyFile().getProperty("api_key");
         authorization = propertiesHelper.readEnvironmentPropertyFile().getProperty("write_access_token");
-        httpRequest = RestAssured.given()
+        spec = RestAssured.given()
                 .baseUri(baseURI)
                 .contentType("application/json;charset=utf-8")
                 .header("authorization", authorization)
@@ -31,25 +31,28 @@ public class BaseRequest {
     }
 
     public Response create(Object object, String endpoint) {
-        return httpRequest.basePath(endpoint).body(object).post();
+        return spec.basePath(endpoint)
+                .body(object)
+                .post();
 
     }
 
     public Response getById(int listId, String endpoint) {
-        return httpRequest.basePath(endpoint)
+        return spec.basePath(endpoint)
                 .queryParam("api_key", apiKey)
                 .queryParam("page", "1")
                 .pathParam("id", listId).get("/{id}");
     }
 
     public Response deleteById(int listId, String endpoint) {
-        return httpRequest.basePath(endpoint)
-                .pathParam("id", listId).delete("/{id}");
+        return spec.basePath(endpoint)
+                .pathParam("id", listId)
+                .delete("/{id}");
     }
 
     public Response updateById(int id, Object object, String endpoint) {
 
-        return httpRequest
+        return spec
                 .basePath(endpoint)
                 .pathParam("id", id)
                 .body(object)
@@ -58,7 +61,7 @@ public class BaseRequest {
 
 
     public Response clearById(int id, String endpoint) {
-        return httpRequest
+        return spec
                 .basePath(endpoint)
                 .pathParam("id", id)
                 .get("/{id}/clear");
@@ -66,7 +69,7 @@ public class BaseRequest {
     }
 
     public Response addItemToListByListId(int id, Object object, String endpoint) {
-        return httpRequest.basePath(endpoint)
+        return spec.basePath(endpoint)
                 .pathParam("id", id)
                 .body(object)
                 .post("/{id}/items");
@@ -74,7 +77,7 @@ public class BaseRequest {
 
     public Response updateItemsToListByListId(int id, Object object, String endpoint) {
 
-        return httpRequest
+        return spec
                 .basePath(endpoint)
                 .pathParam("id", id)
                 .body(object)
@@ -82,7 +85,7 @@ public class BaseRequest {
     }
 
     public Response deleteItemsFromListByListId(int id, Object object, String endpoint) {
-        return httpRequest.basePath(endpoint)
+        return spec.basePath(endpoint)
                 .pathParam("id", id)
                 .body(object)
                 .delete("/{id}/items");
