@@ -1,9 +1,5 @@
 package io.tmdb.rest.model.items;
 
-import io.tmdb.rest.model.items.TMDBListItem;
-import io.tmdb.rest.model.items.TMDBListItems;
-import io.tmdb.rest.model.list.MediaType;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,12 +8,12 @@ public class TMDBListItemsFixture {
 
         TMDBListItem item1= TMDBListItem.builder()
                 .media_id("100")
-                .media_type(MediaType.MOVIE)
+                .media_type(MediaType.movie)
                 .build();
 
         TMDBListItem item2= TMDBListItem.builder()
                 .media_id("101")
-                .media_type(MediaType.MOVIE)
+                .media_type(MediaType.tv)
                 .build();
 
         return TMDBListItems.builder()
@@ -28,13 +24,15 @@ public class TMDBListItemsFixture {
     public static TMDBListItems getTestDataForUpdateTMDBListItems(){
 
         TMDBListItem item1= TMDBListItem.builder()
-                .media_id("102")
-                .media_type(MediaType.MOVIE)
+                .media_id("100")
+                .media_type(MediaType.movie)
+                .comment("updating comment for 100")
                 .build();
 
         TMDBListItem item2= TMDBListItem.builder()
-                .media_id("103")
-                .media_type(MediaType.TV)
+                .media_id("101")
+                .media_type(MediaType.tv)
+                .comment("updating comment for 101")
                 .build();
 
         return TMDBListItems.builder()

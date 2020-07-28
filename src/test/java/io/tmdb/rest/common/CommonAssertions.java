@@ -1,7 +1,12 @@
 package io.tmdb.rest.common;
 
+import io.tmdb.rest.model.items.ItemResults;
+import io.tmdb.rest.model.items.ListItemsResponse;
+
+import java.util.ArrayList;
+
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 
 public class CommonAssertions {
 	private static String CREATE_STATUS_MESSAGE = "The item/record was created successfully.";
@@ -17,6 +22,12 @@ public class CommonAssertions {
 		else if(action.equalsIgnoreCase("update"))
 			assertThat("Status message does not match", actual ,equalTo(UPDATE_STATUS_MESSAGE));
 		else if(action.equalsIgnoreCase("Success"))
-			assertThat("Status message does not match", actual ,equalTo(SUCCESS));
+			assertThat("Status message does not match", actual ,containsString(SUCCESS));
+	}
+
+	public static void verifyEachItemAddedOrUpdatedOrDeleted(ListItemsResponse listItemsResponse) {
+		ArrayList<ItemResults> results = listItemsResponse.getResults();
+		results.forEach(n->
+				assertThat("item failed to save in DB",n.isSuccess()));
 	}
 }

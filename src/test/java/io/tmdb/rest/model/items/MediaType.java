@@ -1,9 +1,9 @@
-package io.tmdb.rest.model.list;
+package io.tmdb.rest.model.items;
 
 public enum MediaType {
-    MOVIE("movie"),
+    movie("movie"),
 
-    TV("tv");
+    tv("tv");
 
     private String value;
 
