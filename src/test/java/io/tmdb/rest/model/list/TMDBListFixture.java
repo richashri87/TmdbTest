@@ -8,10 +8,4 @@ public class TMDBListFixture {
                 .build();
     }
 
-    public static TMDBList getTestDataForUpdateTMDBList(){
-        return TMDBList.builder()
-                .description("This list is very awesome")
-                .build();
-    }
-
 }
