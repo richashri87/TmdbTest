@@ -8,10 +8,7 @@ import io.tmdb.rest.request.ListController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
 
 import static io.tmdb.rest.common.CommonAssertions.assertStatusCode;
 import static io.tmdb.rest.common.CommonAssertions.assertStatusMessage;
@@ -29,7 +26,7 @@ public class TestTMDBList {
 
 
     @ParameterizedTest
-    @MethodSource("geTestDataFortNewTMDBList")
+    @MethodSource("io.tmdb.rest.model.list.TMDBListFixture#geTestDataFortNewTMDBList")
     public void GivenNewList_CreateNewListOnTMDB_ThenCreatedSuccessfully(TMDBList tmdbList) {
         Response response = listController.createList(tmdbList);
 
@@ -42,7 +39,7 @@ public class TestTMDBList {
     }
 
     @ParameterizedTest
-    @MethodSource("createAndUpdateProvider")
+    @MethodSource("io.tmdb.rest.model.list.TMDBListFixture#createAndUpdateProvider")
     public void GivenAList_UpdateDescOfListOnTMDB_ThenUpdatedSuccessfully(TMDBList testDataForCreateTMDBList, TMDBList testDataForUpdateTMDBList) {
         Response response = listController.createList(testDataForCreateTMDBList);
 
@@ -59,7 +56,7 @@ public class TestTMDBList {
     }
 
     @ParameterizedTest
-    @MethodSource("geTestDataFortNewTMDBList")
+    @MethodSource("io.tmdb.rest.model.list.TMDBListFixture#geTestDataFortNewTMDBList")
     public void ClearListById(TMDBList tMDBList) {
         Response response = listController.createList(tMDBList);
 
@@ -74,20 +71,5 @@ public class TestTMDBList {
         assertStatusMessage(createdListResponse.getStatus_message(), "Success");
 
         listController.removeListById(createdListResponse.getId());
-    }
-
-    static TMDBList[] geTestDataFortNewTMDBList() {
-        return new TMDBList[]{
-                new TMDBList("en", "first list name", 0, "description for first list"),
-                new TMDBList("de", " second list name", 0, "description for second list"),
-                new TMDBList("en", " third list name", 0, "description for third list")
-        };
-    }
-
-    static Stream<Arguments> createAndUpdateProvider() {
-        return Stream.of(Arguments.of(new TMDBList("en", "first list name", 0, "desc1"), new TMDBList("updated description for first list")),
-                Arguments.of(new TMDBList("de", " second list name", 0, "desc2"), new TMDBList("updated description for second list")),
-                Arguments.of(new TMDBList("en", " third list name", 0, "desc3"), new TMDBList("updated description for third list"))
-        );
     }
 }
