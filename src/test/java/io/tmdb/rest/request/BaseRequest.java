@@ -37,13 +37,6 @@ public class BaseRequest {
 
     }
 
-    public Response getById(int listId, String endpoint) {
-        return spec.basePath(endpoint)
-                .queryParam("api_key", apiKey)
-                .queryParam("page", "1")
-                .pathParam("id", listId).get("/{id}");
-    }
-
     public Response deleteById(int listId, String endpoint) {
         return spec.basePath(endpoint)
                 .pathParam("id", listId)
@@ -51,7 +44,6 @@ public class BaseRequest {
     }
 
     public Response updateById(int id, Object object, String endpoint) {
-
         return spec
                 .basePath(endpoint)
                 .pathParam("id", id)

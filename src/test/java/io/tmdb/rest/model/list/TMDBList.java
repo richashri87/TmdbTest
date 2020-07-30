@@ -5,12 +5,11 @@ import io.tmdb.rest.model.BaseModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
+
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TMDBList extends BaseModel {
 

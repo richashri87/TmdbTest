@@ -20,8 +20,8 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static io.tmdb.rest.common.CommonAssertions.*;
-import static io.tmdb.rest.model.items.TMDBListItemsFixture.getTestDataForNewTMDBListItems;
-import static io.tmdb.rest.model.list.TMDBListFixture.geTestDataFortNewTMDBList;
+import static io.tmdb.rest.model.items.TMDBListItemsFixture.createTestDataForNewTMDBListItems;
+import static io.tmdb.rest.model.list.TMDBListFixture.createTestDataFortNewTMDBList;
 import static io.tmdb.rest.request.ListController.extractListItemResponse;
 import static io.tmdb.rest.request.ListController.extractListResponse;
 
@@ -35,8 +35,7 @@ public class TestTMDBListItems {
     @ParameterizedTest
     @MethodSource("testDataFortNewTMDBList")
     public void GivenNewList_AddItemsInNewListOnTMDB_ThenAddedSuccessfully(TMDBListItems testDataForCreateTMDBListItems) {
-
-        Response response = listController.createList(geTestDataFortNewTMDBList());
+        Response response = listController.createList(createTestDataFortNewTMDBList());
         assertStatusCode(response.getStatusCode(), 201);
         createdListResponse = extractListResponse(response);
 
@@ -51,7 +50,6 @@ public class TestTMDBListItems {
     }
 
     static ArrayList<TMDBListItems> testDataFortNewTMDBList() {
-
         TMDBListItem item1 = TMDBListItem.builder()
                 .media_id("100")
                 .media_type(MediaType.movie)
@@ -82,7 +80,6 @@ public class TestTMDBListItems {
     }
 
     static ArrayList<TMDBListItems> testDataForUpdateTMDBList() {
-
         TMDBListItem item1 = TMDBListItem.builder()
                 .media_id("100")
                 .media_type(MediaType.movie)
@@ -126,8 +123,7 @@ public class TestTMDBListItems {
     @ParameterizedTest
     @MethodSource("createAndUpdateProvider")
     public void GivenExistingList_UpdateItemsInListOnTMDB_ThenUpdatedSuccessfully(TMDBListItems testDataForCreateTMDBListItems, TMDBListItems testDataForUpdateTMDBListItems) {
-
-        Response response = listController.createList(geTestDataFortNewTMDBList());
+        Response response = listController.createList(createTestDataFortNewTMDBList());
         assertStatusCode(response.getStatusCode(), 201);
         createdListResponse = extractListResponse(response);
 
@@ -146,12 +142,11 @@ public class TestTMDBListItems {
 
     @Test
     public void GivenExistingList_DeleteItemsInListOnTMDB_ThenDeletedSuccessfully() {
-
-        Response response = listController.createList(geTestDataFortNewTMDBList());
+        Response response = listController.createList(createTestDataFortNewTMDBList());
         assertStatusCode(response.getStatusCode(), 201);
         createdListResponse = extractListResponse(response);
 
-        TMDBListItems items = getTestDataForNewTMDBListItems();
+        TMDBListItems items = createTestDataForNewTMDBListItems();
         response = listController.addItemsByListId(createdListResponse.getId(), items);
         assertStatusCode(response.getStatusCode(), 200);
 

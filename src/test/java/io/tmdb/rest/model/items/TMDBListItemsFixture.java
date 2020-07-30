@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TMDBListItemsFixture {
-    public static TMDBListItems getTestDataForNewTMDBListItems() {
-
+    public static TMDBListItems createTestDataForNewTMDBListItems() {
         TMDBListItem item1 = TMDBListItem.builder()
                 .media_id("100")
                 .media_type(MediaType.movie)
@@ -17,26 +16,7 @@ public class TMDBListItemsFixture {
                 .build();
 
         return TMDBListItems.builder()
-                .items(new ArrayList<TMDBListItem>(Arrays.asList(item1, item2)))
-                .build();
-    }
-
-    public static TMDBListItems getTestDataForUpdateTMDBListItems() {
-
-        TMDBListItem item1 = TMDBListItem.builder()
-                .media_id("100")
-                .media_type(MediaType.movie)
-                .comment("updating comment for 100")
-                .build();
-
-        TMDBListItem item2 = TMDBListItem.builder()
-                .media_id("101")
-                .media_type(MediaType.tv)
-                .comment("updating comment for 101")
-                .build();
-
-        return TMDBListItems.builder()
-                .items(new ArrayList<TMDBListItem>(Arrays.asList(item1, item2)))
+                .items(new ArrayList<>(Arrays.asList(item1, item2)))
                 .build();
     }
 }

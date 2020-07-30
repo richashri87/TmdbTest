@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 import static io.tmdb.rest.common.CommonAssertions.assertStatusCode;
 import static io.tmdb.rest.common.CommonAssertions.assertStatusMessage;
-import static io.tmdb.rest.model.items.TMDBListItemsFixture.getTestDataForNewTMDBListItems;
+import static io.tmdb.rest.model.items.TMDBListItemsFixture.createTestDataForNewTMDBListItems;
 import static io.tmdb.rest.request.ListController.extractListResponse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -31,7 +31,6 @@ public class TestTMDBList {
     @ParameterizedTest
     @MethodSource("geTestDataFortNewTMDBList")
     public void GivenNewList_CreateNewListOnTMDB_ThenCreatedSuccessfully(TMDBList tmdbList) {
-
         Response response = listController.createList(tmdbList);
 
         assertStatusCode(response.getStatusCode(), 201);
@@ -45,7 +44,6 @@ public class TestTMDBList {
     @ParameterizedTest
     @MethodSource("createAndUpdateProvider")
     public void GivenAList_UpdateDescOfListOnTMDB_ThenUpdatedSuccessfully(TMDBList testDataForCreateTMDBList, TMDBList testDataForUpdateTMDBList) {
-
         Response response = listController.createList(testDataForCreateTMDBList);
 
         assertStatusCode(response.getStatusCode(), 201);
@@ -63,13 +61,12 @@ public class TestTMDBList {
     @ParameterizedTest
     @MethodSource("geTestDataFortNewTMDBList")
     public void ClearListById(TMDBList tMDBList) {
-
         Response response = listController.createList(tMDBList);
 
         assertStatusCode(response.getStatusCode(), 201);
         createdListResponse = extractListResponse(response);
 
-        response = listController.addItemsByListId(createdListResponse.getId(), getTestDataForNewTMDBListItems());
+        response = listController.addItemsByListId(createdListResponse.getId(), createTestDataForNewTMDBListItems());
         assertStatusCode(response.getStatusCode(), 200);
 
         response = listController.clearListById(createdListResponse.getId());
@@ -81,16 +78,16 @@ public class TestTMDBList {
 
     static TMDBList[] geTestDataFortNewTMDBList() {
         return new TMDBList[]{
-                new TMDBList("en", "first list name", 0, "desc1"),
-                new TMDBList("de", " second list name", 0, "desc2"),
-                new TMDBList("en", " third list name", 0, "desc3")
+                new TMDBList("en", "first list name", 0, "description for first list"),
+                new TMDBList("de", " second list name", 0, "description for second list"),
+                new TMDBList("en", " third list name", 0, "description for third list")
         };
     }
 
     static Stream<Arguments> createAndUpdateProvider() {
-        return Stream.of(Arguments.of(new TMDBList("en", "first list name", 0, "desc1"), new TMDBList("This list is pretty good for first list")),
-                Arguments.of(new TMDBList("de", " second list name", 0, "desc2"), new TMDBList("This list is pretty good for second list")),
-                Arguments.of(new TMDBList("en", " third list name", 0, "desc3"), new TMDBList("This list is pretty good for for third list"))
+        return Stream.of(Arguments.of(new TMDBList("en", "first list name", 0, "desc1"), new TMDBList("updated description for first list")),
+                Arguments.of(new TMDBList("de", " second list name", 0, "desc2"), new TMDBList("updated description for second list")),
+                Arguments.of(new TMDBList("en", " third list name", 0, "desc3"), new TMDBList("updated description for third list"))
         );
     }
 }

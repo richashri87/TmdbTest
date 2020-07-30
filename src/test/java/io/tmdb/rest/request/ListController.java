@@ -8,17 +8,12 @@ import io.tmdb.rest.model.list.ListResponse;
 import io.tmdb.rest.model.list.TMDBList;
 
 public class ListController {
-
     private static final String LIST_ENDPOINT = "/list";
 
     BaseRequest baseRequest = new BaseRequest();
 
     public Response createList(TMDBList TMDBListRequest) {
         return baseRequest.create(TMDBListRequest, LIST_ENDPOINT);
-    }
-
-    public Response getListById(int id) {
-        return baseRequest.getById(id, LIST_ENDPOINT);
     }
 
     public Response updateListById(int id, TMDBList updatedTMDBList) {
