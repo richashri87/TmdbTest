@@ -22,76 +22,75 @@ import static org.hamcrest.Matchers.is;
 
 @DisplayName("API Tests for TMDB List")
 @Tag("tmdb-list-tests")
-public class TestTMDBList
-{
-	ListController listController = new ListController();
-	static ListResponse createdListResponse;
-	static ListResponse updatedListResponse;
-	
+public class TestTMDBList {
+    ListController listController = new ListController();
+    static ListResponse createdListResponse;
+    static ListResponse updatedListResponse;
 
-	@ParameterizedTest
-	@MethodSource("geTestDataFortNewTMDBList")
-	public void GivenNewList_CreateNewListOnTMDB_ThenCreatedSuccessfully(TMDBList tmdbList) {
 
-		Response response = listController.createList(tmdbList);
+    @ParameterizedTest
+    @MethodSource("geTestDataFortNewTMDBList")
+    public void GivenNewList_CreateNewListOnTMDB_ThenCreatedSuccessfully(TMDBList tmdbList) {
 
-		assertStatusCode(response.getStatusCode(), 201);
-		createdListResponse = extractListResponse(response);
-		assertStatusMessage(createdListResponse.getStatus_message(), "create");
-		assertThat(createdListResponse.isSuccess(),is(true));
+        Response response = listController.createList(tmdbList);
 
-		listController.removeListById(createdListResponse.getId());
-	}
+        assertStatusCode(response.getStatusCode(), 201);
+        createdListResponse = extractListResponse(response);
+        assertStatusMessage(createdListResponse.getStatus_message(), "create");
+        assertThat(createdListResponse.isSuccess(), is(true));
 
-	@ParameterizedTest
-	@MethodSource("createAndUpdateProvider")
-	public void GivenAList_UpdateDescOfListOnTMDB_ThenUpdatedSuccessfully(TMDBList testDataForCreateTMDBList, TMDBList testDataForUpdateTMDBList) {
+        listController.removeListById(createdListResponse.getId());
+    }
 
-		Response response = listController.createList(testDataForCreateTMDBList);
+    @ParameterizedTest
+    @MethodSource("createAndUpdateProvider")
+    public void GivenAList_UpdateDescOfListOnTMDB_ThenUpdatedSuccessfully(TMDBList testDataForCreateTMDBList, TMDBList testDataForUpdateTMDBList) {
 
-		assertStatusCode(response.getStatusCode(), 201);
-		createdListResponse = extractListResponse(response);
+        Response response = listController.createList(testDataForCreateTMDBList);
 
-		response = listController.updateListById(createdListResponse.getId(), testDataForUpdateTMDBList);
-		assertStatusCode(response.getStatusCode(), 201);
-		updatedListResponse = extractListResponse(response);
-		assertStatusMessage(updatedListResponse.getStatus_message(), "update");
-		assertThat(updatedListResponse.isSuccess(),is(true));
+        assertStatusCode(response.getStatusCode(), 201);
+        createdListResponse = extractListResponse(response);
 
-		listController.removeListById(createdListResponse.getId());
-	}
+        response = listController.updateListById(createdListResponse.getId(), testDataForUpdateTMDBList);
+        assertStatusCode(response.getStatusCode(), 201);
+        updatedListResponse = extractListResponse(response);
+        assertStatusMessage(updatedListResponse.getStatus_message(), "update");
+        assertThat(updatedListResponse.isSuccess(), is(true));
 
-	@ParameterizedTest
-	@MethodSource("geTestDataFortNewTMDBList")
-	public void ClearListById(TMDBList tMDBList) {
+        listController.removeListById(createdListResponse.getId());
+    }
 
-		Response response = listController.createList(tMDBList);
+    @ParameterizedTest
+    @MethodSource("geTestDataFortNewTMDBList")
+    public void ClearListById(TMDBList tMDBList) {
 
-		assertStatusCode(response.getStatusCode(), 201);
-		createdListResponse = extractListResponse(response);
+        Response response = listController.createList(tMDBList);
 
-		response = listController.addItemsByListId(createdListResponse.getId(), getTestDataForNewTMDBListItems());
-		assertStatusCode(response.getStatusCode(), 200);
+        assertStatusCode(response.getStatusCode(), 201);
+        createdListResponse = extractListResponse(response);
 
-		response = listController.clearListById(createdListResponse.getId());
-		assertStatusCode(response.getStatusCode(), 200);
-		assertStatusMessage(createdListResponse.getStatus_message(), "Success");
+        response = listController.addItemsByListId(createdListResponse.getId(), getTestDataForNewTMDBListItems());
+        assertStatusCode(response.getStatusCode(), 200);
 
-		listController.removeListById(createdListResponse.getId());
-	}
+        response = listController.clearListById(createdListResponse.getId());
+        assertStatusCode(response.getStatusCode(), 200);
+        assertStatusMessage(createdListResponse.getStatus_message(), "Success");
 
-	static TMDBList[] geTestDataFortNewTMDBList() {
-		return new TMDBList[] {
-				new TMDBList("en","first list name",0,"desc1"),
-				new TMDBList("de"," second list name",0,"desc2"),
-				new TMDBList("en"," third list name",0,"desc3")
-		};
-	}
+        listController.removeListById(createdListResponse.getId());
+    }
 
-	static Stream<Arguments> createAndUpdateProvider() {
-		return Stream.of(Arguments.of(new TMDBList("en","first list name",0,"desc1"), new TMDBList("This list is pretty good for first list")),
-				Arguments.of(new TMDBList("de"," second list name",0,"desc2"), new TMDBList("This list is pretty good for second list")),
-				Arguments.of(new TMDBList("en"," third list name",0,"desc3"), new TMDBList("This list is pretty good for for third list"))
-		);
-	}
+    static TMDBList[] geTestDataFortNewTMDBList() {
+        return new TMDBList[]{
+                new TMDBList("en", "first list name", 0, "desc1"),
+                new TMDBList("de", " second list name", 0, "desc2"),
+                new TMDBList("en", " third list name", 0, "desc3")
+        };
+    }
+
+    static Stream<Arguments> createAndUpdateProvider() {
+        return Stream.of(Arguments.of(new TMDBList("en", "first list name", 0, "desc1"), new TMDBList("This list is pretty good for first list")),
+                Arguments.of(new TMDBList("de", " second list name", 0, "desc2"), new TMDBList("This list is pretty good for second list")),
+                Arguments.of(new TMDBList("en", " third list name", 0, "desc3"), new TMDBList("This list is pretty good for for third list"))
+        );
+    }
 }

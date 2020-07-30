@@ -16,8 +16,8 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ListItemsResponse extends BaseModel {
-  private int status_code;
-  private String status_message;
-  private boolean success;
-  private ArrayList<ItemResults> results;
+    private int status_code;
+    private String status_message;
+    private boolean success;
+    private ArrayList<ItemResults> results;
 }

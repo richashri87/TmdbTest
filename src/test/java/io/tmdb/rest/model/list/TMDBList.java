@@ -20,11 +20,11 @@ public class TMDBList extends BaseModel {
     private String description;
 
     @Override
-    public String toString(){
+    public String toString() {
         return name;
     }
 
-    public TMDBList(String description){
+    public TMDBList(String description) {
         this.description = description;
     }
 }

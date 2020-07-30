@@ -27,142 +27,141 @@ import static io.tmdb.rest.request.ListController.extractListResponse;
 
 @DisplayName("API Tests for TMDB List Items")
 @Tag("tmdb-list-items-tests")
-public class TestTMDBListItems
-{
-	ListController listController = new ListController();
-	static ListResponse createdListResponse;
-	static  ListItemsResponse listItemsResponse;
+public class TestTMDBListItems {
+    ListController listController = new ListController();
+    static ListResponse createdListResponse;
+    static ListItemsResponse listItemsResponse;
 
-	@ParameterizedTest
-	@MethodSource("testDataFortNewTMDBList")
-	public void GivenNewList_AddItemsInNewListOnTMDB_ThenAddedSuccessfully(TMDBListItems testDataForCreateTMDBListItems) {
+    @ParameterizedTest
+    @MethodSource("testDataFortNewTMDBList")
+    public void GivenNewList_AddItemsInNewListOnTMDB_ThenAddedSuccessfully(TMDBListItems testDataForCreateTMDBListItems) {
 
-		Response response = listController.createList(geTestDataFortNewTMDBList());
-		assertStatusCode(response.getStatusCode(), 201);
-		createdListResponse = extractListResponse(response);
+        Response response = listController.createList(geTestDataFortNewTMDBList());
+        assertStatusCode(response.getStatusCode(), 201);
+        createdListResponse = extractListResponse(response);
 
-		response = listController.addItemsByListId(createdListResponse.getId(), testDataForCreateTMDBListItems);
-		assertStatusCode(response.getStatusCode(), 200);
-		listItemsResponse = extractListItemResponse(response);
-		assertStatusMessage(listItemsResponse.getStatus_message(), "Success");
+        response = listController.addItemsByListId(createdListResponse.getId(), testDataForCreateTMDBListItems);
+        assertStatusCode(response.getStatusCode(), 200);
+        listItemsResponse = extractListItemResponse(response);
+        assertStatusMessage(listItemsResponse.getStatus_message(), "Success");
 
-		verifyEachItemAddedOrUpdatedOrDeleted(listItemsResponse);
+        verifyEachItemAddedOrUpdatedOrDeleted(listItemsResponse);
 
-		listController.removeListById(createdListResponse.getId());
-	}
+        listController.removeListById(createdListResponse.getId());
+    }
 
-	static ArrayList<TMDBListItems> testDataFortNewTMDBList() {
+    static ArrayList<TMDBListItems> testDataFortNewTMDBList() {
 
-		TMDBListItem item1= TMDBListItem.builder()
-				.media_id("100")
-				.media_type(MediaType.movie)
-				.build();
+        TMDBListItem item1 = TMDBListItem.builder()
+                .media_id("100")
+                .media_type(MediaType.movie)
+                .build();
 
-		TMDBListItem item2= TMDBListItem.builder()
-				.media_id("101")
-				.media_type(MediaType.tv)
-				.build();
+        TMDBListItem item2 = TMDBListItem.builder()
+                .media_id("101")
+                .media_type(MediaType.tv)
+                .build();
 
-		TMDBListItem item3= TMDBListItem.builder()
-				.media_id("102")
-				.media_type(MediaType.tv)
-				.build();
+        TMDBListItem item3 = TMDBListItem.builder()
+                .media_id("102")
+                .media_type(MediaType.tv)
+                .build();
 
-		TMDBListItem item4= TMDBListItem.builder()
-				.media_id("103")
-				.media_type(MediaType.tv)
-				.build();
+        TMDBListItem item4 = TMDBListItem.builder()
+                .media_id("103")
+                .media_type(MediaType.tv)
+                .build();
 
-		return new ArrayList<>(Arrays.asList( TMDBListItems.builder()
-						.items(new ArrayList<>(Arrays.asList(item1,item2)))
-						.build(),
-				TMDBListItems.builder()
-						.items(new ArrayList<>(Arrays.asList(item3,item4)))
-						.build()));
+        return new ArrayList<>(Arrays.asList(TMDBListItems.builder()
+                        .items(new ArrayList<>(Arrays.asList(item1, item2)))
+                        .build(),
+                TMDBListItems.builder()
+                        .items(new ArrayList<>(Arrays.asList(item3, item4)))
+                        .build()));
 
-	}
+    }
 
-	static ArrayList<TMDBListItems> testDataForUpdateTMDBList() {
+    static ArrayList<TMDBListItems> testDataForUpdateTMDBList() {
 
-		TMDBListItem item1= TMDBListItem.builder()
-				.media_id("100")
-				.media_type(MediaType.movie)
-				.comment("updating comment for 100")
-				.build();
+        TMDBListItem item1 = TMDBListItem.builder()
+                .media_id("100")
+                .media_type(MediaType.movie)
+                .comment("updating comment for 100")
+                .build();
 
-		TMDBListItem item2= TMDBListItem.builder()
-				.media_id("101")
-				.media_type(MediaType.tv)
-				.comment("updating comment for 101")
-				.build();
+        TMDBListItem item2 = TMDBListItem.builder()
+                .media_id("101")
+                .media_type(MediaType.tv)
+                .comment("updating comment for 101")
+                .build();
 
-		TMDBListItem item3= TMDBListItem.builder()
-				.media_id("102")
-				.media_type(MediaType.tv)
-				.comment("updating comment for 102")
-				.build();
+        TMDBListItem item3 = TMDBListItem.builder()
+                .media_id("102")
+                .media_type(MediaType.tv)
+                .comment("updating comment for 102")
+                .build();
 
-		TMDBListItem item4= TMDBListItem.builder()
-				.media_id("103")
-				.media_type(MediaType.tv)
-				.comment("updating comment for 103")
-				.build();
+        TMDBListItem item4 = TMDBListItem.builder()
+                .media_id("103")
+                .media_type(MediaType.tv)
+                .comment("updating comment for 103")
+                .build();
 
-		return new ArrayList<>(Arrays.asList( TMDBListItems.builder()
-						.items(new ArrayList<>(Arrays.asList(item1,item2)))
-						.build(),
-				TMDBListItems.builder()
-						.items(new ArrayList<>(Arrays.asList(item3,item4)))
-						.build()));
+        return new ArrayList<>(Arrays.asList(TMDBListItems.builder()
+                        .items(new ArrayList<>(Arrays.asList(item1, item2)))
+                        .build(),
+                TMDBListItems.builder()
+                        .items(new ArrayList<>(Arrays.asList(item3, item4)))
+                        .build()));
 
-	}
+    }
 
-	static Stream<Arguments> createAndUpdateProvider() {
-		return Stream.of(
-				Arguments.of(testDataFortNewTMDBList().get(0),testDataForUpdateTMDBList().get(0)),
-				Arguments.of(testDataFortNewTMDBList().get(1),testDataForUpdateTMDBList().get(1))
-		);
-	}
+    static Stream<Arguments> createAndUpdateProvider() {
+        return Stream.of(
+                Arguments.of(testDataFortNewTMDBList().get(0), testDataForUpdateTMDBList().get(0)),
+                Arguments.of(testDataFortNewTMDBList().get(1), testDataForUpdateTMDBList().get(1))
+        );
+    }
 
-	@ParameterizedTest
-	@MethodSource("createAndUpdateProvider")
-	public void GivenExistingList_UpdateItemsInListOnTMDB_ThenUpdatedSuccessfully(TMDBListItems testDataForCreateTMDBListItems, TMDBListItems testDataForUpdateTMDBListItems) {
+    @ParameterizedTest
+    @MethodSource("createAndUpdateProvider")
+    public void GivenExistingList_UpdateItemsInListOnTMDB_ThenUpdatedSuccessfully(TMDBListItems testDataForCreateTMDBListItems, TMDBListItems testDataForUpdateTMDBListItems) {
 
-		Response response = listController.createList(geTestDataFortNewTMDBList());
-		assertStatusCode(response.getStatusCode(), 201);
-		createdListResponse = extractListResponse(response);
+        Response response = listController.createList(geTestDataFortNewTMDBList());
+        assertStatusCode(response.getStatusCode(), 201);
+        createdListResponse = extractListResponse(response);
 
-		response = listController.addItemsByListId(createdListResponse.getId(), testDataForCreateTMDBListItems);
-		assertStatusCode(response.getStatusCode(), 200);
+        response = listController.addItemsByListId(createdListResponse.getId(), testDataForCreateTMDBListItems);
+        assertStatusCode(response.getStatusCode(), 200);
 
-		response = listController.updateItemsByListId(createdListResponse.getId(), testDataForUpdateTMDBListItems);
-		assertStatusCode(response.getStatusCode(), 200);
-		listItemsResponse = extractListItemResponse(response);
-		assertStatusMessage(listItemsResponse.getStatus_message(), "Success");
+        response = listController.updateItemsByListId(createdListResponse.getId(), testDataForUpdateTMDBListItems);
+        assertStatusCode(response.getStatusCode(), 200);
+        listItemsResponse = extractListItemResponse(response);
+        assertStatusMessage(listItemsResponse.getStatus_message(), "Success");
 
-		verifyEachItemAddedOrUpdatedOrDeleted(listItemsResponse);
+        verifyEachItemAddedOrUpdatedOrDeleted(listItemsResponse);
 
-		listController.removeListById(createdListResponse.getId());
-	}
+        listController.removeListById(createdListResponse.getId());
+    }
 
-	@Test
-	public void GivenExistingList_DeleteItemsInListOnTMDB_ThenDeletedSuccessfully() {
+    @Test
+    public void GivenExistingList_DeleteItemsInListOnTMDB_ThenDeletedSuccessfully() {
 
-		Response response = listController.createList(geTestDataFortNewTMDBList());
-		assertStatusCode(response.getStatusCode(), 201);
-		createdListResponse = extractListResponse(response);
+        Response response = listController.createList(geTestDataFortNewTMDBList());
+        assertStatusCode(response.getStatusCode(), 201);
+        createdListResponse = extractListResponse(response);
 
-		TMDBListItems items = getTestDataForNewTMDBListItems();
-		response = listController.addItemsByListId(createdListResponse.getId(),items );
-		assertStatusCode(response.getStatusCode(), 200);
+        TMDBListItems items = getTestDataForNewTMDBListItems();
+        response = listController.addItemsByListId(createdListResponse.getId(), items);
+        assertStatusCode(response.getStatusCode(), 200);
 
-		response = listController.removeItemsByListId(createdListResponse.getId(),items);
-		assertStatusCode(response.getStatusCode(), 200);
-		listItemsResponse = extractListItemResponse(response);
-		assertStatusMessage(listItemsResponse.getStatus_message(), "Success");
+        response = listController.removeItemsByListId(createdListResponse.getId(), items);
+        assertStatusCode(response.getStatusCode(), 200);
+        listItemsResponse = extractListItemResponse(response);
+        assertStatusMessage(listItemsResponse.getStatus_message(), "Success");
 
-		verifyEachItemAddedOrUpdatedOrDeleted(listItemsResponse);
+        verifyEachItemAddedOrUpdatedOrDeleted(listItemsResponse);
 
-		listController.removeListById(createdListResponse.getId());
-	}
+        listController.removeListById(createdListResponse.getId());
+    }
 }

@@ -2,7 +2,6 @@ package io.tmdb.rest.model.items;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.tmdb.rest.model.BaseModel;
-import io.tmdb.rest.model.items.TMDBListItem;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;

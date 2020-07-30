@@ -12,8 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ListResponse extends BaseModel {
-  private int status_code;
-  private String status_message;
-  private boolean success;
-  private int id;
+    private int status_code;
+    private String status_message;
+    private boolean success;
+    private int id;
 }

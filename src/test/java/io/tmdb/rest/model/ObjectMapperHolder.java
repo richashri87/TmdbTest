@@ -8,7 +8,7 @@ public enum ObjectMapperHolder {
 
     private final ObjectMapper mapper;
 
-    private ObjectMapperHolder() {
+    ObjectMapperHolder() {
         this.mapper = create();
     }
 

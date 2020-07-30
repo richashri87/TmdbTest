@@ -3,9 +3,9 @@ package io.tmdb.rest.request;
 
 import io.restassured.response.Response;
 import io.tmdb.rest.model.items.ListItemsResponse;
+import io.tmdb.rest.model.items.TMDBListItems;
 import io.tmdb.rest.model.list.ListResponse;
 import io.tmdb.rest.model.list.TMDBList;
-import io.tmdb.rest.model.items.TMDBListItems;
 
 public class ListController {
 
@@ -45,11 +45,11 @@ public class ListController {
         return baseRequest.deleteItemsFromListByListId(id, items, LIST_ENDPOINT);
     }
 
-    public static ListResponse extractListResponse(Response response){
+    public static ListResponse extractListResponse(Response response) {
         return response.then().extract().as(ListResponse.class);
     }
 
-    public static ListItemsResponse extractListItemResponse(Response response){
+    public static ListItemsResponse extractListItemResponse(Response response) {
         return response.then().extract().as(ListItemsResponse.class);
     }
 }
